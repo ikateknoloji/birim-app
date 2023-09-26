@@ -19,6 +19,11 @@ class VehicleTypeController extends Controller
     {
         $validatedData = $request->validate([
             'type' => 'required|string|max:255|unique:vehicle_types',
+        ], [
+            'type.required' => 'Tip alanı gereklidir.',
+            'type.string' => 'Tip alanı bir metin olmalıdır.',
+            'type.max' => 'Tip alanı en fazla 255 karakter olmalıdır.',
+            'type.unique' => 'Bu tipde bir araç zaten mevcut.',
         ]);
 
         $vehicleType = VehicleType::create($validatedData);

@@ -37,6 +37,8 @@ Route::post('/products', [ProductController::class, 'store'])->middleware('auth:
 
 Route::get('/products/search', [ProductController::class, 'search']);
 Route::get('/products/{id}', [ProductController::class, 'show']);
+Route::delete('/products/{id}', [ProductController::class, 'destroy'])->middleware('auth:sanctum');
+
 
 Route::get('/brands', [BrandController::class, 'index']);
 Route::post('/brands', [BrandController::class, 'store'])->middleware('auth:sanctum');

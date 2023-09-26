@@ -28,13 +28,13 @@ class CategoryController extends Controller
     {
     $validatedData = $request->validate([
         'name' => 'required|string|max:255|unique:categories',
-        'image' => 'required|image',
+    ],[
+        'name.required' => 'Kategori alanı gereklidir.',
+        'name.string' => 'Kategori alanı bir metin olmalıdır.',
+        'name.max' => 'Kategori alanı en fazla 255 karakter olmalıdır.',
+        'name.unique' => 'Bu isimde bir kategori zaten mevcut.',
     ]);
 
-    if ($request->hasFile('image')) {
-        $path = $request->file('image')->store('images', 'public');
-        $validatedData['image'] = $path;
-    }
 
     $category = Category::create($validatedData);
     return response()->json($category, 201);
@@ -44,16 +44,7 @@ class CategoryController extends Controller
 {
     // Kategori var mı kontrol et
     if ($category) {
-        // Kategorinin resim dosyasını silelim
-        if ($category->image) {
-            // Resim dosyasının yolunu bul
-            $imagePath = public_path('storage/' . $category->image);
 
-            // Resim dosyasını sil
-            if (file_exists($imagePath)) {
-                unlink($imagePath);
-            }
-        }
 
         // Kategoriyi veritabanından sil
         $category->delete();

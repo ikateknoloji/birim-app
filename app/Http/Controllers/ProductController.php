@@ -69,7 +69,29 @@ class ProductController extends Controller
             'category_id' => 'required|exists:categories,id',
             'brand_id' => 'required|exists:brands,id',
             'vehicle_type_id' => 'required|exists:vehicle_types,id',
+        ],
+        [
+            'name.required' => 'Ürün ismi alanı gereklidir.',
+            'name.string' => 'Ürün ismi alanı bir metin olmalıdır.',
+            'name.max' => 'Ürün ismi alanı en fazla 255 karakter olmalıdır.',
+            'description.required' => 'Açıklama alanı gereklidir.',
+            'description.string' => 'Açıklama alanı bir metin olmalıdır.',
+            'image.required' => 'Resim alanı gereklidir.',
+            'image.image' => 'Resim alanı bir resim dosyası olmalıdır.',
+            'motor_model.required' => 'Motor modeli alanı gereklidir.',
+            'motor_model.string' => 'Motor modeli alanı bir metin olmalıdır.',
+            'motor_model.max' => 'Motor modeli alanı en fazla 255 karakter olmalıdır.',
+            'oem_code.required' => 'OEM kodu alanı gereklidir.',
+            'oem_code.string' => 'OEM kodu alanı bir metin olmalıdır.',
+            'oem_code.max' => 'OEM kodu alanı en fazla 255 karakter olmalıdır.',
+            'category_id.required' => 'Kategori ID alanı gereklidir.',
+            'category_id.exists' => "Belirtilen kategori ID'si mevcut değil.",
+            'brand_id.required' => "Marka ID'si alanı gereklidir.",
+            'brand_id.exists' => "Belirtilen marka ID'si mevcut değil.",
+            'vehicle_type_id.required' => "Araç tipi ID'si alanı gereklidir.",
+            'vehicle_type_id.exists' => "Belirtilen araç tipi ID'si mevcut değil.",
         ]);
+        
         $faker = Faker::create();
 
         $validatedData['product_code'] = $faker->unique()->bothify('???######'); 
@@ -122,7 +144,7 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Request $request,$id)
     {
         $product = Product::findOrFail($id);
 
